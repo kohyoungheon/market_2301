@@ -17,4 +17,13 @@ class Vendor
   def stock(item, quantity)
     @inventory[item] += quantity
   end
+
+  def potential_revenue
+    total = 0
+    @inventory.each do |key, value|
+      total += (key.price * value)
+    end
+    total
+  end
+
 end
