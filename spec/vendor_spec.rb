@@ -22,16 +22,23 @@ describe Vendor do
     end
 
     it 'checks given item stock' do
+      @vendor.stock(@item1, 30)
+      @vendor.stock(@item2, 15)
+
+      expect(@vendor.check_stock(@item1)).to eq(30)
+      expect(@vendor.check_stock(@item2)).to eq(15)
     end
   end
 
   describe "#stock" do
-    it 'stocks the given item at given quantitity' do
+    it 'stocks the given item at given quantity' do
       expect(@vendor.inventory).to eq({})
 
       @vendor.stock(@item1, 30)
+      expect(@vendor.inventory).to eq({@item1 => 30})
 
-      expect(@=)
+      @vendor.stock(@item2, 10)
+      expect(@vendor.inventory).to eq({@item1 => 30, @item2 => 10})
     end
   end
 end
