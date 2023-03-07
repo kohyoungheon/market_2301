@@ -39,6 +39,14 @@ describe Vendor do
 
       @vendor.stock(@item2, 10)
       expect(@vendor.inventory).to eq({@item1 => 30, @item2 => 10})
+
+      @vendor.stock(@item1, 20)
+      expect(@vendor.inventory).to eq({@item1 => 50, @item2 => 10})
+
+      expect(@vendor.check_stock(@item1)).to eq(50)
+      expect(@vendor.check_stock(@item2)).to eq(10)
     end
   end
+
+
 end
