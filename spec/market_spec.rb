@@ -4,8 +4,9 @@ require './lib/market'
 describe Market do
   before(:each) do
     @market = Market.new("South Pearl Street Farmers Market") 
-    @vendor2 = Vendor.new("Ba-Nom-a-Nom")
     @vendor1 = Vendor.new("Rocky Mountain Fresh")
+    @vendor2 = Vendor.new("Ba-Nom-a-Nom")
+    @vendor3 = Vendor.new("Palisade Peach Shack")
     @item1 = Item.new({name: 'Peach', price: "$0.75"})
     @item2 = Item.new({name: 'Tomato', price: '$0.50'})
     @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
@@ -28,6 +29,18 @@ describe Market do
 
       @market.add_vendor(@vendor2)
       expect(@market.vendors).to eq([@vendor1, @vendor2])
+    end
+  end
+
+  describe '#vendor_names' do
+    it 'returns a list of vendor names' do
+      expect(@market.vendor_names).to eq([])
+
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.vendor_names).to eq(["Rocky Mountain Fresh", "Ba-Nom-a-Nom", "Palisade Peach Shack"])
     end
   end
 
