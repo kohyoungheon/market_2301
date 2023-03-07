@@ -9,7 +9,7 @@ describe Vendor do
   describe "#initialize" do
     it 'is an instance of Vendor' do
       expect(@vendor).to be_instance_of(Vendor)
-      expect(@vendor.name).to eq('Peach')
+      expect(@vendor.name).to eq('Rocky Mountain Fresh')
       expect(@vendor.inventory).to eq({})
     end
   end
