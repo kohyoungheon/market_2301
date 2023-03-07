@@ -66,4 +66,32 @@ describe Market do
       expect(@market.vendors_that_sell(@item2)).to eq([@vendor2, @vendor3])
     end
   end
+
+  describe '#sorted_item_list' do
+    it 'returns a list of all items alphabetically sorted' do
+      @vendor1.stock(@item1, 5)
+      @vendor1.stock(@item2, 10)
+      @vendor2.stock(@item3, 50)
+      @vendor3.stock(@item4, 15)
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
+    end
+
+    it 'can exclude duplicates' do
+      @vendor1.stock(@item2, 5)
+      @vendor1.stock(@item3, 5)
+
+      @vendor2.stock(@item3, 50)
+      @vendor2.stock(@item4, 50)
+
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach-Raspberry Nice Cream", "Tomato"])
+    end
+  end
+
 end
