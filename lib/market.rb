@@ -34,4 +34,16 @@ class Market
     item_array.uniq.sort
   end
 
+  def total_inventory
+    item_hash = Hash.new do |hash, key|
+      hash[key] = {:quantity => 0, :vendors => []}
+    end
+    @vendors.each do |vendor|
+      vendor.inventory.each do |key, value|
+        item_hash[key][:quantity] += value
+        item_hash[key][:vendors] << vendor
+      end
+    end
+    item_hash
+  end
 end

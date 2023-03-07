@@ -94,4 +94,24 @@ describe Market do
     end
   end
 
+  describe '#total_inventory' do
+    it 'returns the quantity of all items sold in market' do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+
+      @vendor1.stock(@item1, 5)
+      expect(@market.total_inventory).to eq({@item1 => {:quantity => 5, :vendors => [@vendor1]}})
+      
+      @vendor1.stock(@item2, 10)
+      expect(@market.total_inventory).to eq({@item1 => {:quantity => 5, :vendors => [@vendor1]}, 
+                                             @item2 => {:quantity => 10, :vendors => [@vendor1]}})
+      @vendor2.stock(@item1, 50)
+      expect(@market.total_inventory).to eq({@item1 => {:quantity => 55, :vendors => [@vendor1, @vendor2]}, 
+                                             @item2 => {:quantity => 10, :vendors => [@vendor1]}})
+
+      @vendor2.stock(@item2, 30)
+       expect(@market.total_inventory).to eq({@item1 => {:quantity => 55, :vendors => [@vendor1, @vendor2]}, 
+                                              @item2 => {:quantity => 40, :vendors => [@vendor1,@vendor2]}})
+    end
+  end
 end
