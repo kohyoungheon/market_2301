@@ -114,4 +114,27 @@ describe Market do
                                               @item2 => {:quantity => 40, :vendors => [@vendor1,@vendor2]}})
     end
   end
+
+  describe '#overstocked_items' do
+    it 'returns a list of overstocked items' do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.overstocked_items).to eq([])
+
+      @vendor1.stock(@item1, 60)
+      expect(@market.overstocked_items).to eq([])
+
+      @vendor2.stock(@item1, 1)
+      expect(@market.overstocked_items).to eq([@item1])
+
+      @vendor1.stock(@item2, 10)
+      @vendor2.stock(@item2, 10)
+      @vendor3.stock(@item2, 10)
+      expect(@market.overstocked_items).to eq([@item1])
+
+      @vendor3.stock(@item2, 21)
+      expect(@market.overstocked_items).to eq([@item1, @item2])
+    end
+  end
 end
