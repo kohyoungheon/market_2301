@@ -44,4 +44,26 @@ describe Market do
     end
   end
 
+  describe '#vendors_that_sell' do
+    it 'returns a list of vendors that sell the given item' do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+      expect(@market.vendors_that_sell(@item1)).to eq([])
+
+      @vendor1.stock(@item1, 35)
+      expect(@market.vendors_that_sell(@item1)).to eq([@vendor1])
+
+      @vendor2.stock(@item1, 5)
+      expect(@market.vendors_that_sell(@item1)).to eq([@vendor1, @vendor2])
+
+      expect(@market.vendors_that_sell(@item2)).to eq([])
+
+      @vendor2.stock(@item2 , 20)
+      expect(@market.vendors_that_sell(@item2)).to eq([@vendor2])
+
+      @vendor3.stock(@item2 , 10)
+      expect(@market.vendors_that_sell(@item2)).to eq([@vendor2, @vendor3])
+    end
+  end
 end

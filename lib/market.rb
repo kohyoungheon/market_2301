@@ -11,9 +11,17 @@ class Market
   end
   
   def vendor_names
-    @vendors.map do |vendor|
-      vendor.name
+    @vendors.map {|vendor| vendor.name}
+  end
+
+  def vendors_that_sell(item)
+    vendors_list = []
+    @vendors.each do |vendor|
+      if vendor.inventory[item] != 0
+        vendors_list << vendor
+      end
     end
+    vendors_list
   end
 
 end
